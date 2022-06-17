@@ -1,0 +1,129 @@
+project.description = 'Android Application'
+apply plugin: 'com.android.application'
+
+
+dependencies {
+    implementation fileTree(dir: "$projectDir/libs", include: '*.aar')
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation "androidx.transition:transition:1.4.1"
+    implementation "androidx.annotation:annotation:1.2.0"
+}
+
+apply from: 'gradles/echoBuildParameters.gradle'
+
+def proguardFileName = "gradles/proguard.app.conf"
+
+android {
+    compileSdk 30
+
+    defaultConfig {
+        applicationId "com.aspose.barcode.app"
+        minSdk 24
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
+        setProperty("archivesBaseName", "barcode-app")
+    }
+    signingConfigs {
+        release {
+            storeFile file("release-key.jks")
+            storePassword "SvSEsFekfdEHUYb78X"
+            keyAlias "abarcode"
+            keyPassword "SvSEsFekfdEHUYb78X"
+        }
+    }
+
+    buildTypes {
+        basic {
+            signingConfig signingConfigs.release
+            versionNameSuffix '.basic'
+            minifyEnabled true
+            proguardFiles "$proguardFileName"
+        }
+        release {
+            versionNameSuffix '.relese'
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles "$proguardFileName"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled = true
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+android.variantFilter { variant ->
+    if (variant.buildType.name.endsWith('release') || variant.buildType.name.endsWith('debug')) {
+        variant.setIgnore(true);
+    }
+}
+
+
+task cleanAndPrepareFolders {
+    outputs.upToDateWhen { false }
+
+    doFirst {
+        logger.info("\n------\n### cleanAndPrepareFolders start")
+        logger.info("publishPath = $gp.publishPath")
+    }
+
+    doLast {
+        file(gp.publishPath).eachFileRecurse(groovy.io.FileType.FILES) { File file ->
+            if (!file.name.endsWith('.gitignore')) {
+                delete file
+            }
+        }
+        file(gp.logPath).eachFileRecurse(groovy.io.FileType.FILES) { File file ->
+            if (!file.name.endsWith('.gitignore')) {
+                delete file
+            }
+        }
+    }
+    doLast {
+        logger.info("\n------\n### cleanAndPrepareBuildFolders aar end")
+    }
+}
+
+task prepareFiles(type: Copy) {
+    outputs.upToDateWhen { false }
+    from(gp.apkBasicPath) {
+        include(gp.apkBasicName)
+        rename(gp.apkBasicName, gp.apkFinalName)
+    }
+    destinationDir(file(gp.publishPath))
+    doLast {
+        logger.info("\n------\n### prepareFiles")
+        logger.info("apkBasicName " + gp.apkBasicName)
+        logger.info("publishPath " + gp.publishPath)
+        logger.info("apkFinalName " + gp.apkFinalName)
+    }
+}
+
+clean.dependsOn 'cleanAndPrepareFolders'
+preBuild.dependsOn('echoBuildParameters')
+prepareFiles.dependsOn('preBuild')
+build.dependsOn('prepareFiles')

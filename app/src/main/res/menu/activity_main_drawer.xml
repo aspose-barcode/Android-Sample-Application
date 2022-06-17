@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="nav_home">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_2_24"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_recognition"
+            android:icon="@drawable/ic_recognition_24"
+            android:title="@string/menu_recognition" />
+        <item
+            android:id="@+id/nav_generation"
+            android:icon="@drawable/ic_generation_24"
+            android:title="@string/menu_generation" />
+<!--        <item-->
+<!--            android:id="@+id/nav_collaboration"-->
+<!--            android:icon="@drawable/ic_menu_collaboration"-->
+<!--            android:title="@string/menu_collaboration" />-->
+    </group>
+</menu>
