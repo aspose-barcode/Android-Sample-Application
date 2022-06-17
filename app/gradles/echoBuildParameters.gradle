@@ -1,0 +1,9 @@
+task echoBuildParameters {
+    outputs.upToDateWhen { false }
+    doFirst {
+        logger.info("\n------\n### Executing echoBuildParameters for AAR module")
+        println '[obfuscateApk] = ' + gp.obfuscateApk
+        println '[apkBasicName] = ' + gp.apkBasicName
+        println '[apkFinalName] = ' + gp.apkFinalName
+    }
+}
