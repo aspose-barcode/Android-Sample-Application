@@ -29,7 +29,7 @@ It can be QR-code obtained above in the Generating step.
 To change front or back camera you can use the button in the lower-left corner.
 Frame the QR-Code containing the contact's information and press the lower middle button.
 
-[Home](https://www.aspose.com/) | [Product Page](https://https://products.aspose.com/barcode/android-java) | [Docs](https://docs.aspose.com/barcode/#asposebarcode-for-android-via-java) |[API Reference](https://reference.aspose.com/barcode/androidjava/) | [Search](https://search.aspose.com/) | [Free Support](https://forum.aspose.com/c/barcode/) | [Temporary License](https://purchase.aspose.com/temporary-license)
+[Home](https://www.aspose.com/) | [Product Page](https://products.aspose.com/barcode/android-java) | [Docs](https://docs.aspose.com/barcode/#asposebarcode-for-android-via-java) |[API Reference](https://reference.aspose.com/barcode/androidjava/) | [Search](https://search.aspose.com/) | [Free Support](https://forum.aspose.com/c/barcode/) | [Temporary License](https://purchase.aspose.com/temporary-license)
 
 
 
