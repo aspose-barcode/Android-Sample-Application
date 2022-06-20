@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,7 +33,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -61,6 +66,10 @@ import com.aspose.barcode.component.BarcodeGeneratorView;
 import com.aspose.barcode.generation.BaseEncodeType;
 import com.aspose.barcode.generation.EncodeTypes;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -78,6 +87,7 @@ public class GenerationFragment extends Fragment
     private BarcodeGeneratorView barCodeGeneratorView;
     private Button generateButton;
     private Button exportContactButton;
+    private AppCompatImageButton shareBarcodeButton;
 
     private GenerationPreferences generationPreferences;
 
@@ -91,6 +101,7 @@ public class GenerationFragment extends Fragment
 
         generateButton = view.findViewById(R.id.generateButton);
         exportContactButton = view.findViewById(R.id.export_contact_button);
+        shareBarcodeButton = view.findViewById(R.id.shareButton);
 
         barCodeGeneratorView = view.findViewById(R.id.barcodeGeneratorView);
     }
@@ -146,6 +157,14 @@ public class GenerationFragment extends Fragment
 
         generateButton.setOnClickListener(v -> generateBarcodeForEnteredData());
         exportContactButton.setOnClickListener(v -> runGenerationContactBarcodeDialog(view.getContext()));
+        shareBarcodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                shareBarcode(view.getContext());
+            }
+        });
+
         barcodeEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -233,6 +252,41 @@ public class GenerationFragment extends Fragment
         };
         ProcessWaitingDialog<BackgroundProcess> dialog = new ProcessWaitingDialog<>(context, loadContactsProcess, "Load contacts");
         dialog.show();
+    }
+
+    private void shareBarcode(@NonNull Context context)
+    {
+
+        File outputDir = context.getCacheDir();
+        File barcodeImageFile = null;
+        try
+        {
+            barcodeImageFile = File.createTempFile("barcode", ".png", outputDir);
+            Bitmap barcodeImage = ((BitmapDrawable)barCodeGeneratorView.getDrawable()).getBitmap();;
+            FileOutputStream imageStream = new FileOutputStream(barcodeImageFile);
+            barcodeImage.compress(Bitmap.CompressFormat.PNG, 100, imageStream);
+            imageStream.flush();
+            imageStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+
+        if(barcodeImageFile != null && barcodeImageFile.exists())
+        {
+            intentShareFile.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intentShareFile.setType("application/pdf");
+            Uri photoURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", barcodeImageFile);
+            intentShareFile.putExtra(Intent.EXTRA_STREAM, photoURI);
+            intentShareFile.putExtra(Intent.EXTRA_SUBJECT,
+                    barCodeGeneratorView.getCodeTextParameters().getTwoDDisplayText());
+            intentShareFile.putExtra(Intent.EXTRA_TEXT, barCodeGeneratorView.getCodeTextParameters().getTwoDDisplayText());
+
+            startActivity(Intent.createChooser(intentShareFile, barCodeGeneratorView.getCodeTextParameters().getTwoDDisplayText()));
+        }
     }
 
     private void setBarCodeGeneratorViewData(String barcodeCodeText, String displayCodeText, BaseEncodeType encodeType)
