@@ -1,5 +1,10 @@
+//apply plugin: 'com.android.application'
+plugins {
+    id("com.android.application")
+    id("maven-publish")
+}
+
 project.description = 'Android Application'
-apply plugin: 'com.android.application'
 
 
 dependencies {
@@ -77,18 +82,24 @@ android {
 }
 
 android.variantFilter { variant ->
-    if (variant.buildType.name.endsWith('release') || variant.buildType.name.endsWith('debug')) {
+    if (variant.buildType.name.endsWith('debug')) {
         variant.setIgnore(true);
     }
 }
+
+//android.variantFilter { variant ->
+//    if (variant.buildType.name.endsWith('release') || variant.buildType.name.endsWith('debug')) {
+//        variant.setIgnore(true);
+//    }
+//}
 
 
 task cleanAndPrepareFolders {
     outputs.upToDateWhen { false }
 
     doFirst {
-        logger.info("\n------\n### cleanAndPrepareFolders start")
-        logger.info("publishPath = $gp.publishPath")
+        logger.debug("\n------\n### cleanAndPrepareFolders start")
+        logger.debug("publishPath is $gp.publishPath")
     }
 
     doLast {
@@ -104,7 +115,7 @@ task cleanAndPrepareFolders {
         }
     }
     doLast {
-        logger.info("\n------\n### cleanAndPrepareBuildFolders aar end")
+        logger.debug("\n------\n### cleanAndPrepareBuildFolders aar end")
     }
 }
 
@@ -116,14 +127,33 @@ task prepareFiles(type: Copy) {
     }
     destinationDir(file(gp.publishPath))
     doLast {
-        logger.info("\n------\n### prepareFiles")
-        logger.info("apkBasicName " + gp.apkBasicName)
-        logger.info("publishPath " + gp.publishPath)
-        logger.info("apkFinalName " + gp.apkFinalName)
+        logger.debug("\n------\n### prepareFiles")
+        logger.debug("apkBasicName " + gp.apkBasicName)
+        logger.debug("publishPath " + gp.publishPath)
+        logger.debug("apkFinalName " + gp.apkFinalName)
     }
 }
 
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/aspose-barcode/Android-Sample-Application")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+
 clean.dependsOn 'cleanAndPrepareFolders'
 preBuild.dependsOn('echoBuildParameters')
-prepareFiles.dependsOn('preBuild')
+prepareFiles.dependsOn('assembleBasic')
 build.dependsOn('prepareFiles')
