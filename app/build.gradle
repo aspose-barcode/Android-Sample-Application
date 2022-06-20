@@ -1,5 +1,10 @@
+//apply plugin: 'com.android.application'
+plugins {
+    id("com.android.application")
+    id("maven-publish")
+}
+
 project.description = 'Android Application'
-apply plugin: 'com.android.application'
 
 
 dependencies {
@@ -128,6 +133,25 @@ task prepareFiles(type: Copy) {
         logger.debug("apkFinalName " + gp.apkFinalName)
     }
 }
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/aspose-barcode/Android-Sample-Application")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
 
 clean.dependsOn 'cleanAndPrepareFolders'
 preBuild.dependsOn('echoBuildParameters')
