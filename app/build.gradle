@@ -55,6 +55,7 @@ android {
             signingConfig signingConfigs.release
             versionNameSuffix '.basic'
             minifyEnabled true
+            debuggable true
             proguardFiles "$proguardFileName"
         }
         release {
