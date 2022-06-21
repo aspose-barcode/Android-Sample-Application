@@ -1,11 +1,41 @@
-//apply plugin: 'com.android.application'
-plugins {
-    id("com.android.application")
-    id("maven-publish")
+apply plugin: 'com.android.application'
+apply plugin: 'maven-publish'
+
+project.description = 'Aspose Barcode Android Application'
+
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+
+def getVersionName = { ->
+    return "22.6"
 }
 
-project.description = 'Android Application'
+def getArtificatId = { ->
+    return "android-barcode-application"
+}
 
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'com.aspose.barcode' // Replace with group ID
+            artifactId 'android-barcode-application'
+            version '22.6'
+            artifact("$projectDir/publish/${getArtificatId()}.apk")
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/aspose-barcode/Android-Sample-Application")
+
+            credentials {
+                username = githubProperties['github.user']
+                password = githubProperties['github.key']
+            }
+        }
+    }
+}
 
 dependencies {
     implementation fileTree(dir: "$projectDir/libs", include: '*.aar')
@@ -133,25 +163,6 @@ task prepareFiles(type: Copy) {
         logger.debug("apkFinalName " + gp.apkFinalName)
     }
 }
-
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/aspose-barcode/Android-Sample-Application")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
-            }
-        }
-    }
-    publications {
-        gpr(MavenPublication) {
-            from(components.java)
-        }
-    }
-}
-
 
 clean.dependsOn 'cleanAndPrepareFolders'
 preBuild.dependsOn('echoBuildParameters')
