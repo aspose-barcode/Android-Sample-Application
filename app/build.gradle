@@ -6,21 +6,21 @@ project.description = 'Aspose Barcode Android Application'
 def githubProperties = new Properties()
 githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 
-def getVersionName = { ->
-    return "22.6"
-}
+//def getVersionName = { ->
+//    return "22.6"
+//}
 
-def getArtificatId = { ->
-    return "android-barcode-application"
-}
+//def getArtificatId = { ->
+//    return "android-barcode-application"
+//}
 
 publishing {
     publications {
         bar(MavenPublication) {
-            groupId 'com.aspose.barcode' // Replace with group ID
-            artifactId 'android-barcode-application'
-            version '22.6'
-            artifact("$projectDir/publish/${getArtificatId()}.apk")
+            groupId gp.groupId
+            artifactId gp.artifactFinalName
+            version gp.versionName
+            artifact(gp.publishPath + gp.apkFinalName)
         }
     }
 
