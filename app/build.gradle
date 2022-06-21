@@ -6,14 +6,6 @@ project.description = 'Aspose Barcode Android Application'
 def githubProperties = new Properties()
 githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 
-//def getVersionName = { ->
-//    return "22.6"
-//}
-
-//def getArtificatId = { ->
-//    return "android-barcode-application"
-//}
-
 publishing {
     publications {
         bar(MavenPublication) {
