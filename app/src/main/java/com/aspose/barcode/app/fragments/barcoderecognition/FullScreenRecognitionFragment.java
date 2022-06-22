@@ -1,19 +1,20 @@
 package com.aspose.barcode.app.fragments.barcoderecognition;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Size;
+import android.view.LayoutInflater;
+import android.view.TextureView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,28 +23,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.os.Environment;
-import android.util.Size;
-import android.view.LayoutInflater;
-import android.view.TextureView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 import com.aspose.barcode.app.R;
 import com.aspose.barcode.app.backgroundprocess.OnPhotoAvailableListener;
 import com.aspose.barcode.app.backgroundprocess.ProcessWaitingDialog;
 import com.aspose.barcode.barcoderecognition.BaseDecodeType;
 import com.aspose.barcode.barcoderecognition.DecodeType;
 import com.aspose.barcode.barcoderecognition.QualitySettings;
-import com.aspose.barcode.barcoderecognition.SingleDecodeType;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -79,7 +64,8 @@ public class FullScreenRecognitionFragment extends Fragment
     //ViewModel
     private RecognitionViewModel model;
 
-    public FullScreenRecognitionFragment() {
+    public FullScreenRecognitionFragment()
+    {
         // Required empty public constructor
     }
 
@@ -89,8 +75,10 @@ public class FullScreenRecognitionFragment extends Fragment
         super.onCreate(savedInstanceState);
         model = new ViewModelProvider(this).get(RecognitionViewModel.class);
         LiveData<RecognitionPreferences> data = model.getData();
-        if(data.getValue() != null)
+        if (data.getValue() != null)
+        {
             this.recognitionPreferences = data.getValue();
+        }
         data.observe(this, recognitionPreferences -> this.recognitionPreferences = recognitionPreferences);
     }
 
@@ -107,7 +95,8 @@ public class FullScreenRecognitionFragment extends Fragment
         try
         {
             initControls(view);
-            if(recognitionPreferences == null) {
+            if (recognitionPreferences == null)
+            {
 
                 recognitionPreferences = new RecognitionPreferences();
                 recognitionPreferences.setDecodeType(DecodeType.ALL_SUPPORTED_TYPES);
@@ -147,7 +136,7 @@ public class FullScreenRecognitionFragment extends Fragment
                     int viewWidth = view.getWidth();
                     int viewHeight = view.getHeight();
                     recognitionFocusView = new RectangleView(view.getContext(), viewWidth, viewHeight);
-                    ((FrameLayout)view).addView(recognitionFocusView);
+                    ((FrameLayout) view).addView(recognitionFocusView);
                     recognitionFocusView.setVisibility(View.INVISIBLE);
                 }
             });
@@ -159,20 +148,30 @@ public class FullScreenRecognitionFragment extends Fragment
         cameraView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener()
         {
             @Override
-            public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height){cameraService.initCamera();}
+            public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
+            {
+                cameraService.initCamera();
+            }
 
             @Override
-            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height){}
+            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height)
+            {
+            }
 
             @Override
-            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface){return false;}
+            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface)
+            {
+                return false;
+            }
 
             @Override
-            public void onSurfaceTextureUpdated(SurfaceTexture surface){}
+            public void onSurfaceTextureUpdated(SurfaceTexture surface)
+            {
+            }
         });
 
         recognizeButton.setOnClickListener(v -> cameraService.makePhoto(recognitionPreferences.getResolution(), onPhotoAvailableListener));
-        switchCameraButton.setOnClickListener(v ->cameraService.switchCamera());
+        switchCameraButton.setOnClickListener(v -> cameraService.switchCamera());
 
         recognitionPreferencesButton.setOnClickListener(v ->
         {
@@ -216,7 +215,7 @@ public class FullScreenRecognitionFragment extends Fragment
             loadLayout();
         });
 
-        switch(recognitionPreferences.getRecognitionTypeMode())
+        switch (recognitionPreferences.getRecognitionTypeMode())
         {
             case CONTACT_RECOGNITION_MODE:
                 loadContactRecognitionLayout();
@@ -234,13 +233,15 @@ public class FullScreenRecognitionFragment extends Fragment
             @Override
             protected BarcodeRecognizer getBarcodeRecognizer(@NonNull Bitmap photoImage, @NonNull Context context)
             {
-                Bitmap croppedImage = Bitmap.createBitmap(photoImage, (int)(photoImage.getWidth() * 0.1), (int)(photoImage.getHeight() * 0.25), (int)(photoImage.getWidth() * 0.8), (int)(photoImage.getHeight() * 0.5));
+                Bitmap croppedImage = Bitmap.createBitmap(photoImage, (int) (photoImage.getWidth() * 0.1), (int) (photoImage.getHeight() * 0.25), (int) (photoImage.getWidth() * 0.8), (int) (photoImage.getHeight() * 0.5));
                 return new ContactRecognizer(context, croppedImage);
             }
         };
 
-        if(recognitionFocusView != null)
+        if (recognitionFocusView != null)
+        {
             recognitionFocusView.setVisibility(View.VISIBLE);
+        }
         recognitionPreferencesButton.setEnabled(false);
     }
 
@@ -253,7 +254,9 @@ public class FullScreenRecognitionFragment extends Fragment
             protected BarcodeRecognizer getBarcodeRecognizer(@NonNull Bitmap photoImage, @NonNull Context context)
             {
                 if (recognitionPreferences.isSaveToFile())
+                {
                     saveImageToFile(photoImage);
+                }
 
                 BaseDecodeType decodeType = recognitionPreferences.getDecodeType();
                 QualitySettings qualitySettings = recognitionPreferences.getQualitySettings();
@@ -262,8 +265,10 @@ public class FullScreenRecognitionFragment extends Fragment
             }
         };
 
-        if(recognitionFocusView != null)
+        if (recognitionFocusView != null)
+        {
             recognitionFocusView.setVisibility(View.INVISIBLE);
+        }
         recognitionPreferencesButton.setEnabled(true);
     }
 
@@ -272,8 +277,12 @@ public class FullScreenRecognitionFragment extends Fragment
         Size lowestResolution = resolutions[0];
 
         for (Size resolution : resolutions)
+        {
             if (resolution.getWidth() * resolution.getHeight() < lowestResolution.getWidth() * lowestResolution.getHeight())
+            {
                 lowestResolution = resolution;
+            }
+        }
 
         return lowestResolution;
     }
@@ -283,7 +292,7 @@ public class FullScreenRecognitionFragment extends Fragment
         try
         {
             File tempImageDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + TEMP_IMAGE_FILE_PATH);
-            if (! tempImageDirectory.exists())
+            if (!tempImageDirectory.exists())
             {
                 tempImageDirectory.mkdir();
             }
@@ -291,7 +300,8 @@ public class FullScreenRecognitionFragment extends Fragment
             OutputStream output = new FileOutputStream(filePath);
             image.compress(Bitmap.CompressFormat.JPEG, 100, output);
             Toast.makeText(getContext(), "Image saved to: " + filePath, Toast.LENGTH_SHORT).show();
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
             Toast.makeText(getContext(), "Image saving failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -301,6 +311,7 @@ public class FullScreenRecognitionFragment extends Fragment
     private abstract class PhotoAvailableListener implements OnPhotoAvailableListener
     {
         protected abstract BarcodeRecognizer getBarcodeRecognizer(@NonNull Bitmap photoImage, @NonNull Context context);
+
         @Override
         public final void invoke(@NonNull Bitmap photoImage, @NonNull Context context)
         {

@@ -5,19 +5,15 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
-import android.webkit.URLUtil;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.aspose.barcode.app.backgroundprocess.BackgroundProcess;
-import com.aspose.barcode.app.backgroundprocess.ProcessFinishedListener;
 import com.aspose.barcode.barcoderecognition.BarCodeReader;
 import com.aspose.barcode.barcoderecognition.BarCodeResult;
 import com.aspose.barcode.barcoderecognition.BaseDecodeType;
@@ -33,7 +29,8 @@ public class BarcodeRecognizer extends BackgroundProcess
     protected BarCodeResult[] results;
 
     @Override
-    public void runProcess() {
+    public void runProcess()
+    {
         this.results = barcodeReader.readBarCodes();
     }
 
@@ -47,13 +44,14 @@ public class BarcodeRecognizer extends BackgroundProcess
     public void processBackgroundResults()
     {
         String recognitionResultsMessage = RECOGNITION_ABORTED;
-        if(results != null)
+        if (results != null)
         {
             recognitionResultsMessage = NOT_RECOGNIZED;
             if (results.length > 0 && results[0] != null)
             {
                 recognitionResultsMessage = "";
-                for (int i = 1; i <= results.length; i++) {
+                for (int i = 1; i <= results.length; i++)
+                {
                     recognitionResultsMessage += i + ". " + results[i - 1].getCodeText() + ";\n";
                 }
             }
@@ -69,7 +67,7 @@ public class BarcodeRecognizer extends BackgroundProcess
         Linkify.addLinks(s, Linkify.ALL);
         messageAlertDialog.setMessage(s);
 
-        if(!(message.equals(NOT_RECOGNIZED) || message.equals(RECOGNITION_ABORTED)))
+        if (!(message.equals(NOT_RECOGNIZED) || message.equals(RECOGNITION_ABORTED)))
         {
             messageAlertDialog.setPositiveButton("Copy to clipboard", (dialog, which) ->
             {
@@ -78,9 +76,10 @@ public class BarcodeRecognizer extends BackgroundProcess
                 clipboard.setPrimaryClip(clip);
             });
         }
-        messageAlertDialog.setNegativeButton("Cancel", (dialog, which) -> {});
+        messageAlertDialog.setNegativeButton("Cancel", (dialog, which) -> {
+        });
         AlertDialog dialog = messageAlertDialog.create();
         dialog.show();
-        ((TextView)dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView) dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
