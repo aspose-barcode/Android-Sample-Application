@@ -5,5 +5,10 @@ task echoBuildParameters {
         println '[obfuscateApk] = ' + gp.obfuscateApk
         println '[apkBasicName] = ' + gp.apkBasicName
         println '[apkFinalName] = ' + gp.apkFinalName
+        println '[groupId] = ' + gp.groupId
+        println '[versionName] = ' + gp.versionName
+        println '[publishPath] = ' + gp.publishPath
+        println '[artifact] = ' + gp.publishPath + gp.apkFinalName
+
     }
 }

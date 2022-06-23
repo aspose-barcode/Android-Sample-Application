@@ -12,13 +12,14 @@ buildscript {
 
 project.ext {
     gp = rootProject.ext
-//    apkBuiltPath = "$rootDir/app/build/outputs/apk/basic/barcode-app-basic-unsigned.apk"
-//    apkBuiltPath = "$rootDir/app/build/outputs/apk/basic/barcode-app-basic.apk"
     apkBasicPath = "$rootDir/app/build/outputs/apk/basic/"
     apkBasicName = "barcode-app-basic.apk"
     obfuscateApk = project.ext.get('obfuscate_apk')
     publishPath = "${rootDir}/app/publish/"
-    apkFinalName = "aspose-barcode-app.apk"
+    versionName = project.ext.get('version_name')
+    groupId = "com.aspose.barcode"
+    artifactFinalName = "android-barcode-application"
+    apkFinalName = artifactFinalName + ".apk"
     logPath = "${rootDir}/app/logs"
 }
 

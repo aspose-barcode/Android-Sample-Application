@@ -1,11 +1,33 @@
-//apply plugin: 'com.android.application'
-plugins {
-    id("com.android.application")
-    id("maven-publish")
+apply plugin: 'com.android.application'
+apply plugin: 'maven-publish'
+
+project.description = 'Aspose Barcode Android Application'
+
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId gp.groupId
+            artifactId gp.artifactFinalName
+            version gp.versionName
+            artifact(gp.publishPath + gp.apkFinalName)
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/aspose-barcode/Android-Sample-Application")
+
+            credentials {
+                username = githubProperties['github.user']
+                password = githubProperties['github.key']
+            }
+        }
+    }
 }
-
-project.description = 'Android Application'
-
 
 dependencies {
     implementation fileTree(dir: "$projectDir/libs", include: '*.aar')
@@ -133,25 +155,6 @@ task prepareFiles(type: Copy) {
         logger.debug("apkFinalName " + gp.apkFinalName)
     }
 }
-
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/aspose-barcode/Android-Sample-Application")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
-            }
-        }
-    }
-    publications {
-        gpr(MavenPublication) {
-            from(components.java)
-        }
-    }
-}
-
 
 clean.dependsOn 'cleanAndPrepareFolders'
 preBuild.dependsOn('echoBuildParameters')
