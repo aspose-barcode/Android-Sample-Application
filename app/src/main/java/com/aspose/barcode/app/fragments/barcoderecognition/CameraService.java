@@ -44,15 +44,19 @@ public class CameraService
     {
         Context context = cameraView.getContext();
         if (context == null)
+        {
             throw new NullPointerException();
+        }
         Image image = reader.acquireLatestImage();
         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
         byte[] bytes = new byte[buffer.capacity()];
         buffer.get(bytes);
 
         Bitmap barcodeImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
-        if(onPhotoAvailableListener != null)
+        if (onPhotoAvailableListener != null)
+        {
             onPhotoAvailableListener.invoke(barcodeImage, context);
+        }
     };
 
     public CameraService(@NonNull TextureView cameraView)
@@ -87,16 +91,20 @@ public class CameraService
                         session.stopRepeating();
                         session.abortCaptures();
                         session.capture(captureBuilder.build(), null, null);
-                    } catch (CameraAccessException e)
+                    }
+                    catch (CameraAccessException e)
                     {
                         e.printStackTrace();
                     }
                 }
 
                 @Override
-                public void onConfigureFailed(CameraCaptureSession session){}
+                public void onConfigureFailed(CameraCaptureSession session)
+                {
+                }
             }, null);
-        } catch (CameraAccessException e)
+        }
+        catch (CameraAccessException e)
         {
             e.printStackTrace();
         }
@@ -124,8 +132,7 @@ public class CameraService
                 cameraView.getContext().startActivity(intent);
             });
             messageAlertDialog.show();
-        }
-        else
+        } else
         {
             try
             {
@@ -156,7 +163,9 @@ public class CameraService
         }
 
         @Override
-        public void onError(CameraDevice camera, int error){}
+        public void onError(CameraDevice camera, int error)
+        {
+        }
     };
 
     private void createCameraPreviewSession()
@@ -181,16 +190,20 @@ public class CameraService
                             try
                             {
                                 session.setRepeatingRequest(builder.build(), null, null);
-                            } catch (CameraAccessException e)
+                            }
+                            catch (CameraAccessException e)
                             {
                                 e.printStackTrace();
                             }
                         }
 
                         @Override
-                        public void onConfigureFailed(CameraCaptureSession session){}
+                        public void onConfigureFailed(CameraCaptureSession session)
+                        {
+                        }
                     }, null);
-        } catch (CameraAccessException e)
+        }
+        catch (CameraAccessException e)
         {
             e.printStackTrace();
         }

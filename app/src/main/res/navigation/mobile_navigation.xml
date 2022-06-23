@@ -14,7 +14,7 @@
         android:id="@+id/nav_recognition"
         android:name="com.aspose.barcode.app.fragments.barcoderecognition.FullScreenRecognitionFragment"
         android:label="@string/menu_recognition"
-        tools:layout="@layout/fragment_recognition" />
+        tools:layout="@layout/fragment_full_screen_recognition" />
     <fragment
         android:id="@+id/nav_generation"
         android:name="com.aspose.barcode.app.fragments.barcodegeneration.GenerationFragment"
