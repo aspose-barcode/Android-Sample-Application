@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.aspose.barcode.app.fragments.generatorviewexample.GeneratorViewExampleFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_v_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_v_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_v_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.73" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_h_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_h_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_h_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_h_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.60" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_h_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <com.aspose.barcode.component.BarcodeGeneratorView
+        android:id="@+id/barcodeGeneratorView1"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginLeft="45dp"
+        android:background="@drawable/border"
+        app:barcodeType="CODABAR"
+        app:codetext="77783412"
+        app:xDimension="0.8"
+        app:barHeight="18"
+        app:rotationAngle="90"
+        app:filledBars="true"
+        app:layout_constraintLeft_toLeftOf="@id/line_v_1"
+        app:layout_constraintTop_toTopOf="@id/line_h_1" />
+
+    <com.aspose.barcode.component.BarcodeGeneratorView
+        android:id="@+id/barcodeGeneratorView2"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginLeft="45dp"
+        android:background="@drawable/border"
+        app:barcodeType="GS_1_QR"
+        app:codetext="8847382229"
+        app:rotationAngle="130"
+        app:resolution="300"
+        app:layout_constraintLeft_toLeftOf="@id/line_v_2"
+        app:layout_constraintTop_toTopOf="@id/line_h_1" />
+
+    <com.aspose.barcode.component.BarcodeGeneratorView
+        android:id="@+id/barcodeGeneratorView3"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginLeft="45dp"
+        android:background="@drawable/border"
+        app:barcodeType="AZTEC"
+        app:codetext="74432121"
+        app:layout_constraintLeft_toLeftOf="@id/line_v_3"
+        app:layout_constraintTop_toTopOf="@id/line_h_1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

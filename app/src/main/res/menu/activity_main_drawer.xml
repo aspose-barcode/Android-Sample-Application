@@ -17,9 +17,9 @@
             android:id="@+id/nav_generation"
             android:icon="@drawable/ic_generation_24"
             android:title="@string/menu_generation" />
-<!--        <item-->
-<!--            android:id="@+id/nav_collaboration"-->
-<!--            android:icon="@drawable/ic_menu_collaboration"-->
-<!--            android:title="@string/menu_collaboration" />-->
+        <item
+            android:id="@+id/nav_generator_view_example"
+            android:icon="@drawable/ic_menu_collaboration"
+            android:title="@string/menu_generator_view_example" />
     </group>
 </menu>
