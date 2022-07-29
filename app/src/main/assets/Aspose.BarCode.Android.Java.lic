@@ -1,21 +1,3 @@
 <?xml version="1.0"?>
 <License>
-  <Data>
-    <LicensedTo>Aspose</LicensedTo>
-    <EmailTo>ivan.semenenia@aspose.com</EmailTo>
-    <LicenseType>Developer Small Business</LicenseType>
-    <LicenseNote>1 Developer And 1 Deployment Location</LicenseNote>
-    <OrderID>220621135847</OrderID>
-    <UserID>759528</UserID>
-    <OEM>This is not a redistributable license</OEM>
-    <Products>
-      <Product>Aspose.BarCode for Android via Java</Product>
-    </Products>
-    <EditionType>Professional</EditionType>
-    <SerialNumber>562ee145-0302-48e6-b4f5-222e62b110b2</SerialNumber>
-    <SubscriptionExpiry>20230621</SubscriptionExpiry>
-    <LicenseVersion>3.0</LicenseVersion>
-    <LicenseInstructions>https://purchase.aspose.com/policies/use-license</LicenseInstructions>
-  </Data>
-  <Signature>svD02nIBg7+zjNSkalcFH0r0pgjz1yPM4vlblfs71P9sNnye4g7vl4wFzA5ygii/jFRqyzx7qrn+9BLNlR2LP39aW0v+wDxWD56MY49RqO1prEsUAKZrymCrhlgKsT4SlPfbUQxDZKRv3Zx/FaQWBey0NLLI0h3YxIDHflgQQ2o=</Signature>
-</License>
+ </License>
