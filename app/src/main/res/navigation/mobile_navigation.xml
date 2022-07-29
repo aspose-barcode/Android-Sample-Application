@@ -20,4 +20,9 @@
         android:name="com.aspose.barcode.app.fragments.barcodegeneration.GenerationFragment"
         android:label="@string/menu_generation"
         tools:layout="@layout/fragment_generation"/>
+  <fragment
+        android:id="@+id/nav_generator_view_example"
+        android:name="com.aspose.barcode.app.fragments.generatorviewexample.GeneratorViewExampleFragment"
+        android:label="@string/menu_generator_view_example"
+        tools:layout="@layout/fragment_generator_view_example"/>
 </navigation>

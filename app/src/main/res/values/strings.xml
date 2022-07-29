@@ -10,7 +10,7 @@
     <string name="menu_recognition">Recognition</string>
     <string name="menu_generation">Generation</string>
     <string name="menu_home">Home</string>
-<!--    <string name="menu_collaboration">Collaboration</string>-->
+    <string name="menu_generator_view_example">GeneratorView Example</string>
 
     <!--   TODO check - From Application 3-->
     <string name="back_button_text">BACK</string>
