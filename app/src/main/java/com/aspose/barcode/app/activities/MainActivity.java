@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         Locale.setDefault(new Locale("en", "US"));
         License license = setLicense(getApplicationContext(), "Aspose.BarCode.Android.Java.lic");
-        Log.d(TAG,"is licensed : " + license.isLicensed());
 
 
 
