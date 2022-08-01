@@ -67,7 +67,7 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginLeft="45dp"
-        android:background="@drawable/border"
+        android:background="@drawable/bg1"
         app:barcodeType="CODABAR"
         app:codetext="77783412"
         app:xDimension="0.8"
@@ -77,27 +77,32 @@
         app:layout_constraintLeft_toLeftOf="@id/line_v_1"
         app:layout_constraintTop_toTopOf="@id/line_h_1" />
 
-    <com.aspose.barcode.component.BarcodeGeneratorView
+ <com.aspose.barcode.component.BarcodeGeneratorView
         android:id="@+id/barcodeGeneratorView2"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginLeft="45dp"
-        android:background="@drawable/border"
-        app:barcodeType="GS_1_QR"
-        app:codetext="8847382229"
-        app:rotationAngle="130"
-        app:resolution="300"
+        android:background="@drawable/bg1"
+        app:barcodeType="GS_1_CODE_128"
+        app:codetext="3344557789"
+        app:xDimension="1.3"
+        app:barHeight="11"
+        app:rotationAngle="45"
+        app:filledBars="true"
         app:layout_constraintLeft_toLeftOf="@id/line_v_2"
         app:layout_constraintTop_toTopOf="@id/line_h_1" />
+
+
 
     <com.aspose.barcode.component.BarcodeGeneratorView
         android:id="@+id/barcodeGeneratorView3"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginLeft="45dp"
-        android:background="@drawable/border"
+        android:background="@drawable/bg1"
         app:barcodeType="AZTEC"
         app:codetext="74432121"
+        app:rotationAngle="-30"
         app:layout_constraintLeft_toLeftOf="@id/line_v_3"
         app:layout_constraintTop_toTopOf="@id/line_h_1" />
 

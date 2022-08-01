@@ -12,6 +12,7 @@ buildscript {
 
 project.ext {
     gp = rootProject.ext
+    libraryVersion = project.ext.get('library_version')
     apkBasicPath = "$rootDir/app/build/outputs/apk/basic/"
     apkBasicName = "barcode-app-basic.apk"
     obfuscateApk = project.ext.get('obfuscate_apk')

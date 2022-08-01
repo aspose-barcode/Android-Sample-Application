@@ -61,7 +61,7 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginLeft="45dp"
-        android:background="@drawable/border"
+        android:background="@drawable/bg1"
         app:barcodeType="QR"
         app:layout_constraintLeft_toLeftOf="@id/line_v_1"
         app:layout_constraintTop_toTopOf="@id/line_h_1" />
